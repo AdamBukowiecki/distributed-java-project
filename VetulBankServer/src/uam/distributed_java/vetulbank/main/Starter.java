@@ -24,6 +24,9 @@ import com.google.common.cache.CacheBuilder;
 @ComponentScan
 @EnableAutoConfiguration
 @RestController
+
+// Cachowanie jest WYLACZONE (sie sypie :( )!
+
 //@EnableCaching
 public class Starter {
 
@@ -49,7 +52,7 @@ public class Starter {
 	@Bean
 	public CacheManager cacheManager(){
 		CacheBuilder cacheBuilder = CacheBuilder.newBuilder().maximumSize(1000).expireAfterWrite(10, TimeUnit.SECONDS);
-		GuavaCacheManager cacheManager = new GuavaCacheManager("reviews");
+		GuavaCacheManager cacheManager = new GuavaCacheManager("transactions");
 		cacheManager.setCacheBuilder(cacheBuilder);
 		return cacheManager;
 	}

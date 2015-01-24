@@ -13,18 +13,9 @@ import uam.distributed_java.vetulbank.main.models.Transaction;
 @RequestMapping(value = "/transactions")
 public class TransactionController {
 
-	private static String currentId = "1";
-	
 	@RequestMapping(method = RequestMethod.POST)
 	public void performTransaction(@Valid @RequestBody Transaction transaction) {
-		// TODO
+		// TODO actorManager.performTransaction(transaction)
 	}
 	
-	private String generateIdForTransaction() {
-		String id = new String(currentId);
-		// TODO generowanie unikalnego id
-		
-		return id;
-		
-	}
 }
