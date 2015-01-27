@@ -3,14 +3,16 @@ package uam.distributed_java.vetulbank.main.models;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import uam.distributed_java.vetulbank.main.models.Account.MinimalView;
-
 import com.fasterxml.jackson.annotation.JsonView;
 
+@Entity
 public class Transaction {
+	
+	public interface MinimalView {};
 	
 	@Id
 	@JsonView(MinimalView.class)
@@ -18,12 +20,11 @@ public class Transaction {
 	
 	@NotBlank
 	@JsonView(MinimalView.class)
-	private Account from;
-	
+	private String fromId;
 
 	@NotBlank
 	@JsonView(MinimalView.class)
-	private Account target;
+	private String targetId;
 	
 	@NotBlank
 	@JsonView(MinimalView.class)
@@ -39,10 +40,10 @@ public class Transaction {
 	
 	public Transaction() {}
 	
-	public Transaction(String id, Account from, Account target, Double value, String desciprion, Date date) {
+	public Transaction(String id, String from, String target, Double value, String desciprion, Date date) {
 		setId(id);
-		setFrom(from);
-		setTarget(target);
+		setFromId(from);
+		setTargetId(target);
 		setValue(value);
 		setDescription(desciprion);
 		setDate(date);
@@ -54,22 +55,6 @@ public class Transaction {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public Account getFrom() {
-		return from;
-	}
-
-	public void setFrom(Account from) {
-		this.from = from;
-	}
-
-	public Account getTarget() {
-		return target;
-	}
-
-	public void setTarget(Account target) {
-		this.target = target;
 	}
 
 	public Double getValue() {
@@ -95,5 +80,22 @@ public class Transaction {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	public String getFromId() {
+		return fromId;
+	}
+
+	public void setFromId(String fromId) {
+		this.fromId = fromId;
+	}
+
+	public String getTargetId() {
+		return targetId;
+	}
+
+	public void setTargetId(String targetId) {
+		this.targetId = targetId;
+	}
+
 	
 }

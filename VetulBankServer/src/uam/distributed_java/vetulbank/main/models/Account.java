@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -22,7 +23,7 @@ public class Account {
 	@JsonView(MinimalView.class)
 	private double money;
 	
-	@JsonView(MinimalView.class)
+	@Transient
 	private List<Transaction> transactions;
 
 	public Account() {}

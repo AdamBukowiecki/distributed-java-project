@@ -19,6 +19,9 @@ import org.springframework.cache.guava.GuavaCacheManager;
 
 
 
+
+import akka.actor.ActorSystem;
+
 import com.google.common.cache.CacheBuilder;
 
 @ComponentScan
@@ -48,7 +51,7 @@ public class Starter {
 	public Filter shallowETagHeaderFilter() {
 		return new ShallowEtagHeaderFilter();
 	}
-	
+	/*
 	@Bean
 	public CacheManager cacheManager(){
 		CacheBuilder cacheBuilder = CacheBuilder.newBuilder().maximumSize(1000).expireAfterWrite(10, TimeUnit.SECONDS);
@@ -56,8 +59,17 @@ public class Starter {
 		cacheManager.setCacheBuilder(cacheBuilder);
 		return cacheManager;
 	}
+	*/
+	
+	private static ActorSystem actorSystem;
+	public static ActorSystem getActorSystem() {
+		return actorSystem;
+	}
 	
 	public static void main(String[] args) {
+		
+		actorSystem = ActorSystem.create("VetulBankActorSystem");
+		
 		SpringApplication.run(Starter.class, args);
 	}
 
