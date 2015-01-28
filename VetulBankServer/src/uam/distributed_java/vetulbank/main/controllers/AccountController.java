@@ -65,8 +65,8 @@ public class AccountController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/password/{pass}", method = RequestMethod.GET)
-	public Boolean checkPasswordOfAccountsById(@PathVariable String id, @PathVariable String pass){
-		return accountRepository.findOne(id).getId().equals(pass);
+	public String checkPasswordOfAccountsById(@PathVariable String id, @PathVariable String pass){
+		return String.valueOf(accountRepository.findOne(id).getId().equals(pass));
 	}
 	
 	@JsonView(Account.MinimalView.class)
