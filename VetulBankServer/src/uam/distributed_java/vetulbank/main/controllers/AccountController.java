@@ -50,7 +50,7 @@ public class AccountController {
 		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
 		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.GET_ACCOUNT_BY_ID, id);
 		ref.tell(message, ActorRef.noSender());
-		return (Account) message.getResult();
+		return message.getResult();
 	}
 	
 	@ResponseBody
@@ -59,7 +59,7 @@ public class AccountController {
 		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
 		ActorMessage<List<Transaction>> message = new ActorMessage<>(MessageCodes.GET_ACCOUNTS_TRANSACTIONS, id);
 		ref.tell(message, ActorRef.noSender());
-		return (List<Transaction>) message.getResult();
+		return message.getResult();
 	}
 	
 	@ResponseBody
@@ -77,7 +77,7 @@ public class AccountController {
 		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
 		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.CREATE_ACCOUNT, id);
 		ref.tell(message, ActorRef.noSender());
-		return (Account) message.getResult();
+		return message.getResult();
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
