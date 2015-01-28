@@ -34,7 +34,7 @@ import uam.distributed_java.vetulbank.main.repositories.AccountRepository;
  * \ GET accounts/{id}/transactions - pobranie transakcji Account'a o podanym id
  * \ DELETE accounts/{id} - usuniecie Account'a o podanym id
  * \ PUT accounts/{id} - stworzenie i pobranie Account'a o podanym id
- * 
+ * \ GET accounts/{id}/password/{pass} - zwroci Boolean'a czy Account id ma haslo pass
  * 
  * @author s383930
  *
@@ -60,6 +60,15 @@ public class AccountController {
 		ActorMessage<List<Transaction>> message = new ActorMessage<>(MessageCodes.GET_ACCOUNTS_TRANSACTIONS, id);
 		ref.tell(message, ActorRef.noSender());
 		return (List<Transaction>) message.getResult();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/{id}/password/{pass}", method = RequestMethod.GET)
+	public Boolean checkPasswordOfAccountsById(@PathVariable String id, @PathVariable String pass) {
+		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		ActorMessage<String> message = new ActorMessage<>(MessageCodes.GET_ACCOUNT_PASSWORD, id);
+		ref.tell(message, ActorRef.noSender());
+		return message.getResult().equals(pass);
 	}
 	
 	@JsonView(Account.MinimalView.class)
