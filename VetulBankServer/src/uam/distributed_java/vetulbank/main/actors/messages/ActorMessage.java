@@ -1,7 +1,8 @@
 package uam.distributed_java.vetulbank.main.actors.messages;
 
-public class ActorMessage {
+public class ActorMessage<T> {
 
+	private T result;
 	private MessageCodes code;
 	private String id;
 	
@@ -13,8 +14,17 @@ public class ActorMessage {
 	public MessageCodes getCode() {
 		return code;
 	}
+	
 	public String getId() {
 		return id;
+	}
+
+	public T getResult() {
+		return result;
+	}
+
+	public void setResult(T result) {
+		this.result = result;
 	}
 	
 }

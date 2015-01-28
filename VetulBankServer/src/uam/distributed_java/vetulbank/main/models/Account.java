@@ -21,6 +21,10 @@ public class Account {
 	
 	@NotBlank
 	@JsonView(MinimalView.class)
+	private String password;
+	
+	@NotBlank
+	@JsonView(MinimalView.class)
 	private double money;
 	
 	@Transient
@@ -28,12 +32,21 @@ public class Account {
 
 	public Account() {}
 	
-	public Account(String id, double money, List<Transaction> transactions) {
+	public Account(String id, double money, String password, List<Transaction> transactions) {
 		setId(id);
 		setMoney(money);
 		setTransactions(transactions);
+		setPassword(password);
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getId() {
 		return id;
 	}
