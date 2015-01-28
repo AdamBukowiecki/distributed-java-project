@@ -1,10 +1,7 @@
 package uam.distributed_java.vetulbank.main.models;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -19,23 +16,17 @@ public class Account {
 	@JsonView(MinimalView.class)
 	private String id;
 	
-	@NotBlank
 	@JsonView(MinimalView.class)
 	private String password;
 	
-	@NotBlank
 	@JsonView(MinimalView.class)
 	private double money;
 	
-	@Transient
-	private List<Transaction> transactions;
-
 	public Account() {}
 	
-	public Account(String id, double money, String password, List<Transaction> transactions) {
+	public Account(String id, double money, String password) {
 		setId(id);
 		setMoney(money);
-		setTransactions(transactions);
 		setPassword(password);
 	}
 	
@@ -61,14 +52,6 @@ public class Account {
 
 	public void setMoney(double money) {
 		this.money = money;
-	}
-
-	public List<Transaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
 	}
 	
 }

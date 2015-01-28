@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.Filter;
 
 import org.h2.server.web.WebServlet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -22,7 +23,10 @@ import org.springframework.cache.guava.GuavaCacheManager;
 
 
 
+
 import uam.distributed_java.vetulbank.main.actors.ActorManager;
+import uam.distributed_java.vetulbank.main.repositories.AccountRepository;
+import uam.distributed_java.vetulbank.main.repositories.TransactionRepository;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;

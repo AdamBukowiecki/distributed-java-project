@@ -18,29 +18,24 @@ public class Transaction {
 	@JsonView(MinimalView.class)
 	private String id;
 	
-	@NotBlank
 	@JsonView(MinimalView.class)
 	private String fromId;
 
-	@NotBlank
 	@JsonView(MinimalView.class)
 	private String targetId;
 	
-	@NotBlank
 	@JsonView(MinimalView.class)
-	private Double value;
+	private double value;
 	
-	@NotBlank
 	@JsonView(MinimalView.class)
 	private String description;
 	
-	@NotBlank
 	@JsonView(MinimalView.class)
 	private Date date;
 	
 	public Transaction() {}
 	
-	public Transaction(String id, String from, String target, Double value, String desciprion, Date date) {
+	public Transaction(String id, String from, String target, double value, String desciprion, Date date) {
 		setId(id);
 		setFromId(from);
 		setTargetId(target);
@@ -57,11 +52,11 @@ public class Transaction {
 		this.id = id;
 	}
 
-	public Double getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(Double value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 

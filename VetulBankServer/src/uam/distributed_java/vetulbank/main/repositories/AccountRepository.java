@@ -8,7 +8,4 @@ import uam.distributed_java.vetulbank.main.models.Account;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, String> {
 
-	public Account getById(String id);
-	public void deleteAccountById(String id);
-	
 }
