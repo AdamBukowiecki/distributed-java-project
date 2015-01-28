@@ -27,28 +27,12 @@ echo '
                 </ul>
               </nav>
             </div>
-          </div>';
+          </div><div class="inner cover">';
 
-          if($page=="about"){
-             echo 'Pustka';
-          } elseif($page=="signup"){
-              echo '<div class="inner cover">
-            <form class="form-signin" id="signup" name="singup" method="post" action="#">
-        <h2 class="form-signin-heading">Wypełnij formularz</h2>
-        <input name="password" id="password" type="password" class="form-control" placeholder="Password">
-        <input name="confirmPassword" id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password">
-        <button name="Submit" id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-    </form>
-    <div id="message"></div>
-    <script src="template/js/singup.js"></script>';
+          if(isset($page)){
+              include("template/".$page.".html");
           } else {
-              echo '<div class="inner cover">
-            <h1 class="cover-heading">Bezpieczeństwo.</h1>
-            <p class="lead">Przede wszystkim.</p>
-            <p class="lead">
-              <a href="login.php" class="btn btn-lg btn-primary">Log In!</a>
-            </p>
-          </div>';
+              include("template/index.html");
           }
 
           echo '<div class="mastfoot">
