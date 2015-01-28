@@ -20,7 +20,12 @@ import org.springframework.cache.guava.GuavaCacheManager;
 
 
 
+
+
+import uam.distributed_java.vetulbank.main.actors.ActorManager;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
 
 import com.google.common.cache.CacheBuilder;
 
@@ -62,13 +67,21 @@ public class Starter {
 	*/
 	
 	private static ActorSystem actorSystem;
+	
 	public static ActorSystem getActorSystem() {
 		return actorSystem;
+	}
+	
+	private static ActorRef actorManager;
+	
+	public static ActorRef getActorManager() {
+		return actorManager;
 	}
 	
 	public static void main(String[] args) {
 		
 		actorSystem = ActorSystem.create("VetulBankActorSystem");
+		actorManager = actorSystem.actorOf(Props.create(ActorManager.class), "actorManager");
 		
 		SpringApplication.run(Starter.class, args);
 	}

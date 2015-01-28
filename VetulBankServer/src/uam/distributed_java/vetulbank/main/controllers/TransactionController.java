@@ -40,9 +40,9 @@ public class TransactionController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void performTransaction(@Valid @RequestBody Transaction transaction) {
-		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		ActorRef actorManager = Starter.getActorManager();
 		TransactionMessage message = new TransactionMessage(transaction);
-		ref.tell(message, ActorRef.noSender());
+		actorManager.tell(message, ActorRef.noSender());
 	}
 	
 }

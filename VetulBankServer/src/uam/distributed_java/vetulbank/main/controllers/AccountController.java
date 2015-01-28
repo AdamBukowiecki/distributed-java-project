@@ -42,9 +42,9 @@ public class AccountController {
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Account getAccountById(@PathVariable String id) throws InterruptedException {
-		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		ActorRef actorManager = Starter.getActorManager();
 		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.GET_ACCOUNT_BY_ID, id);
-		ref.tell(message, ActorRef.noSender());
+		actorManager.tell(message, ActorRef.noSender());
 		Thread.sleep(100);
 		return message.getResult();
 	}
@@ -52,9 +52,9 @@ public class AccountController {
 	@ResponseBody
 	@RequestMapping(value = "/{id}/transactions", method = RequestMethod.GET)
 	public List<Transaction> getAccountsTransactionsById(@PathVariable String id) throws InterruptedException {
-		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		ActorRef actorManager = Starter.getActorManager();
 		ActorMessage<List<Transaction>> message = new ActorMessage<>(MessageCodes.GET_ACCOUNTS_TRANSACTIONS, id);
-		ref.tell(message, ActorRef.noSender());
+		actorManager.tell(message, ActorRef.noSender());
 		Thread.sleep(200);
 		return message.getResult();
 	}
@@ -62,45 +62,45 @@ public class AccountController {
 	@ResponseBody
 	@RequestMapping(value = "/{id}/password/{pass}", method = RequestMethod.GET)
 	public Boolean checkPasswordOfAccountsById(@PathVariable String id, @PathVariable String pass) throws InterruptedException {
-		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		ActorRef actorManager = Starter.getActorManager();
 		ActorMessage<String> message = new ActorMessage<>(MessageCodes.GET_ACCOUNT_PASSWORD, id);
-		ref.tell(message, ActorRef.noSender());
+		actorManager.tell(message, ActorRef.noSender());
 		Thread.sleep(100);
 		return message.getResult().equals(pass);
 	}
 	
 	@RequestMapping(value = "create", method = RequestMethod.PUT)
 	public Account createAccount() throws InterruptedException {
-		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		ActorRef actorManager = Starter.getActorManager();
 		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.CREATE_ACCOUNT, "");
-		ref.tell(message, ActorRef.noSender());
+		actorManager.tell(message, ActorRef.noSender());
 		Thread.sleep(100);
 		return message.getResult();
 	}
 	
 	@RequestMapping(value = "create/password/{pass}", method = RequestMethod.PUT)
 	public Account createAccountWithPassword(@PathVariable String pass) throws InterruptedException {
-		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		ActorRef actorManager = Starter.getActorManager();
 		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.CREATE_ACCOUNT, "");
-		ref.tell(message, ActorRef.noSender());
+		actorManager.tell(message, ActorRef.noSender());
 		ChangePasswordMessage messagePassword = new ChangePasswordMessage(message.getResult().getId(), pass);
-		ref.tell(messagePassword, ActorRef.noSender());
+		actorManager.tell(messagePassword, ActorRef.noSender());
 		Thread.sleep(100);
 		return message.getResult();
 	}
 	
 	@RequestMapping(value = "/{id}/password/{pass}", method = RequestMethod.PUT)
 	public void setPassword(@PathVariable String id, @PathVariable String pass) {
-		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		ActorRef actorManager = Starter.getActorManager();
 		ChangePasswordMessage message = new ChangePasswordMessage(id, pass);
-		ref.tell(message, ActorRef.noSender());
+		actorManager.tell(message, ActorRef.noSender());
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void deleteAccountById(@PathVariable String id) {
-		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		ActorRef actorManager = Starter.getActorManager();
 		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.DELETE_ACCOUNT_BY_ID, id);
-		ref.tell(message, ActorRef.noSender());
+		actorManager.tell(message, ActorRef.noSender());
 	}
 	
 }
