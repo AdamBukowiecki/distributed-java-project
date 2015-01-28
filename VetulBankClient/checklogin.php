@@ -1,33 +1,27 @@
 <?php
-    if(isset($_POST['myusername'])){
+    if(isset($_POST['accountId'])){
+
         ob_start();
         session_start();
-        $myusername = $_POST['myusername'];
-        $mypassword = $_POST['mypassword'];
+        $accountId = $_POST['accountId'];
+        $password = $_POST['password'];
 
-        $myusername = stripslashes($myusername);
-        $mypassword = stripslashes($mypassword);
 
-        $count = 1;
-
-        if($count==1){
-            echo "true";
-            $_SESSION['username'] = 'myusername';
-            $_SESSION['password'] = 'mypassword';
-        }
-        else {
-            echo "<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Wrong Username or Password</div>";
-        }
-        ob_end_flush();
-    } else {
         $data = array(
-            'username' => $myusername,
-            'password' => $mypassword
+            'accountId' => $accountId,
+            'password' => $password
         );
 
         $postString = http_build_query($data, '', '&');
 
-        $url = 'http://rest-service.guides.spring.io/greeting';
+        $url = 'http://localhost:8080/account/'.$accountId.'/password/'.$password;
+
+        $opts2 = array('http' =>
+            array(
+                'method'  => 'GET',
+                'header'  => 'Content-type: application/x-www-form-urlencoded'
+            )
+        );
 
         $opts = array('http' =>
             array(
@@ -37,11 +31,23 @@
             )
         );
 
-        $context = stream_context_create($opts);
+        $context = stream_context_create($opts2);
 
         $result = file_get_contents($url, false, $context);
 
         $array = json_decode($result);
         print_r($array);
+
+        if(true){
+            echo 'true';
+            $_SESSION['accountId'] = $accountId;
+            $_SESSION['password'] = $password;
+        } else {
+            echo "<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Wrong Account Id or Password</div>";
+        }
+
+        ob_end_flush();
+    } else {
+        header("location:index.php");
     }
 ?>
