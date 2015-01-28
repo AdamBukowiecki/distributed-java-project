@@ -13,6 +13,7 @@ import uam.distributed_java.vetulbank.main.models.Account;
 import uam.distributed_java.vetulbank.main.models.Transaction;
 import uam.distributed_java.vetulbank.main.repositories.AccountRepository;
 import uam.distributed_java.vetulbank.main.repositories.TransactionRepository;
+import uam.distributed_java.vetulbank.main.tools.IDGenerator;
 import akka.actor.UntypedActor;
 
 public class ActorManager extends UntypedActor {
@@ -74,6 +75,9 @@ public class ActorManager extends UntypedActor {
 		
 		case CREATE_ACCOUNT: {
 			ActorMessage<Boolean> parameterizedMessage = (ActorMessage<Boolean>) message;
+			String id = parameterizedMessage.getId();
+			while(accountRepository.exists(id))
+				id = IDGenerator.generateID();
 			accountRepository.save(new Account(parameterizedMessage.getId(), 1000, "", new ArrayList<Transaction>()));
 		}
 		

@@ -1,7 +1,6 @@
 package uam.distributed_java.vetulbank.main.controllers;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;
-
 import uam.distributed_java.vetulbank.main.Starter;
 import uam.distributed_java.vetulbank.main.actors.ActorManager;
 import uam.distributed_java.vetulbank.main.actors.messages.ActorMessage;
@@ -19,6 +17,7 @@ import uam.distributed_java.vetulbank.main.actors.messages.ChangePasswordMessage
 import uam.distributed_java.vetulbank.main.actors.messages.messagescodes.MessageCodes;
 import uam.distributed_java.vetulbank.main.models.Account;
 import uam.distributed_java.vetulbank.main.models.Transaction;
+import uam.distributed_java.vetulbank.main.tools.IDGenerator;
 
 /**
  * 
@@ -70,8 +69,7 @@ public class AccountController {
 	@RequestMapping(value = "create", method = RequestMethod.PUT)
 	public Account createAccount() {
 		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
-		String id = UUID.randomUUID().toString();
-		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.CREATE_ACCOUNT, id);
+		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.CREATE_ACCOUNT, "");
 		ref.tell(message, ActorRef.noSender());
 		return message.getResult();
 	}
@@ -79,10 +77,9 @@ public class AccountController {
 	@RequestMapping(value = "create/password/{pass}", method = RequestMethod.PUT)
 	public Account createAccountWithPassword(@PathVariable String pass) {
 		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
-		String id = UUID.randomUUID().toString();
-		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.CREATE_ACCOUNT, id);
+		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.CREATE_ACCOUNT, "");
 		ref.tell(message, ActorRef.noSender());
-		ChangePasswordMessage messagePassword = new ChangePasswordMessage(id, pass);
+		ChangePasswordMessage messagePassword = new ChangePasswordMessage(message.getResult().getId(), pass);
 		ref.tell(messagePassword, ActorRef.noSender());
 		return message.getResult();
 	}
