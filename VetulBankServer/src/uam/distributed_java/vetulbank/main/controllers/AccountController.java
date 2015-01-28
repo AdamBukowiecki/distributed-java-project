@@ -78,6 +78,7 @@ public class AccountController {
 		return accountRepository.save(new Account(id, 1000, ""));
 	}
 	
+	@JsonView(Account.MinimalView.class)
 	@RequestMapping(value = "create/password/{pass}", method = RequestMethod.PUT)
 	public Account createAccountWithPassword(@PathVariable String pass) throws InterruptedException {
 		String id = IDGenerator.generateID();
