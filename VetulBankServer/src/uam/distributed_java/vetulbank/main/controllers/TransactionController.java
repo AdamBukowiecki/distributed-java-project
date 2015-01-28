@@ -20,6 +20,17 @@ import uam.distributed_java.vetulbank.main.models.Account;
 import uam.distributed_java.vetulbank.main.models.Transaction;
 import uam.distributed_java.vetulbank.main.repositories.TransactionRepository;
 
+/**
+ * 
+ * API:
+ * 
+ * \ PUT /transactions - wykonuje podanego na PUT-ie obiekt Transaction (robi przelew)
+ * 
+ * 
+ * @author s383930
+ *
+ */
+
 @RestController
 @RequestMapping(value = "/transactions")
 public class TransactionController {
