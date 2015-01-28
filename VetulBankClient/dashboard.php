@@ -1,10 +1,13 @@
 <?php
     session_start();
-    if(!isset($_SESSION['username'])){
+    if(!isset($_SESSION['accountId'])){
         header("location:index.php");
     }
 
+    $title = "konto";
     $file = "dashboard";
+
+    $page = $_GET['p'];
 
     include("template/header.html");
 
@@ -17,19 +20,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="index.php">VetulBank</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
+            <li'.(($page=="") ? ' class="active"' : '').'><a href="dashboard.php">Dashboard</a></li>
+            <li'.(($page=="profile") ? ' class="active"' : '').'><a href="dashboard.php?p=profile">Profile</a></li>
             <li class="divider-vertical"></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="logout.php">Logout</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
         </div>
       </div>
     </nav>
@@ -38,51 +37,37 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
+            <li'.(($page=="") ? ' class="active"' : '').'><a href="dashboard.php">Overview <span class="sr-only">(current)</span></a></li>
+            <li'.(($page=="transfer") ? ' class="active"' : '').'><a href="dashboard.php?p=transfer">Make a transfer</a></li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">';
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
+
+          if($page == "") {
+              echo '<h1 class="page-header">Dashboard</h1><div class="row">
+              <div class="col-sm-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Account number</h3>
+                    </div>
+                    <div class="panel-body">
+                      123
+                    </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Account balance</h3>
+                    </div>
+                    <div class="panel-body">
+                      123 $
+                    </div>
+                </div>
+              </div>
           </div>
-
-          <h2 class="sub-header">Section title</h2>
+          <h2 class="sub-header">Transaction History</h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -94,123 +79,32 @@
                   <th>Header</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                <tr>
-                  <td>1,011</td>
-                  <td>eget</td>
-                  <td>nulla</td>
-                  <td>Class</td>
-                  <td>aptent</td>
-                </tr>
-                <tr>
-                  <td>1,012</td>
-                  <td>taciti</td>
-                  <td>sociosqu</td>
-                  <td>ad</td>
-                  <td>litora</td>
-                </tr>
-                <tr>
-                  <td>1,013</td>
-                  <td>torquent</td>
-                  <td>per</td>
-                  <td>conubia</td>
-                  <td>nostra</td>
-                </tr>
-                <tr>
-                  <td>1,014</td>
-                  <td>per</td>
-                  <td>inceptos</td>
-                  <td>himenaeos</td>
-                  <td>Curabitur</td>
-                </tr>
-                <tr>
-                  <td>1,015</td>
-                  <td>sodales</td>
-                  <td>ligula</td>
-                  <td>in</td>
-                  <td>libero</td>
-                </tr>
-              </tbody>
+              <tbody>';
+
+              $json_string = file_get_contents('http://api.wunderground.com/api/f429b85619ed45e8/geolookup/conditions/forecast/q/Australia/Sydney.json');
+              $transactions = json_decode($json_string);
+
+              foreach($transactions as $row) {
+                  echo '<tr>
+                  <td>$row->{\'id\'}</td>
+                  <td>$row->{\'from\'}</td>
+                  <td>$row->{\'to\'}</td>
+                  <td>$row->{\'amount\'}</td>
+                </tr>';
+              }
+
+              echo '</tbody>
             </table>
-          </div>
-        </div>
+          </div>';
+          } elseif($page == "transfer"){
+              echo '<h1 class="page-header">Transfer</h1>';
+          } elseif($page == "profile"){
+              echo '<h1 class="page-header">Profile</h1>
+                <div id="accountId" class="hide">'.$_SESSION['accountId'].'</div>
+                <a id="delete" href="#" class="btn btn-lg btn-danger">Delete account</a>
+                <script src="template/js/profile.js"></script>';
+          }
+        echo '</div>
       </div>
     </div>';
 
