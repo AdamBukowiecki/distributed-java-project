@@ -1,4 +1,4 @@
-package uam.distributed_java.vetulbank.main.actors.messages;
+package uam.distributed_java.vetulbank.main.actors.messages.messagescodes;
 
 public enum MessageCodes {
 	GET_ACCOUNT_BY_ID,

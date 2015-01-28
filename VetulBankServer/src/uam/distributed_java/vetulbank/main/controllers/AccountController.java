@@ -1,12 +1,9 @@
 package uam.distributed_java.vetulbank.main.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,13 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import uam.distributed_java.vetulbank.main.Starter;
 import uam.distributed_java.vetulbank.main.actors.ActorManager;
 import uam.distributed_java.vetulbank.main.actors.messages.ActorMessage;
 import uam.distributed_java.vetulbank.main.actors.messages.ChangePasswordMessage;
-import uam.distributed_java.vetulbank.main.actors.messages.MessageCodes;
+import uam.distributed_java.vetulbank.main.actors.messages.messagescodes.MessageCodes;
 import uam.distributed_java.vetulbank.main.models.Account;
 import uam.distributed_java.vetulbank.main.models.Transaction;
 
@@ -32,7 +27,8 @@ import uam.distributed_java.vetulbank.main.models.Transaction;
  * \ GET accounts/{id} - pobranie Account'a o podanym id
  * \ GET accounts/{id}/transactions - pobranie transakcji Account'a o podanym id
  * \ DELETE accounts/{id} - usuniecie Account'a o podanym id
- * \ PUT accounts/{id} - stworzenie i pobranie Account'a o podanym id
+ * \ PUT accounts/create - stworzenie i pobranie Account'a
+ * \ PUT accounts/create/password/{pass} - stworzenie i pobranie Account'a z konkretnym passem
  * \ GET accounts/{id}/password/{pass} - zwroci Boolean'a czy Account id ma haslo pass
  * \ PUT accounts/{id}/password/{pass} - zmiena haslo Account'a z podanym id na nowe rowne pass
  * 
@@ -71,12 +67,23 @@ public class AccountController {
 		return message.getResult().equals(pass);
 	}
 	
-	@JsonView(Account.MinimalView.class)
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public Account createAccount(@PathVariable String id) {
+	@RequestMapping(value = "create", method = RequestMethod.PUT)
+	public Account createAccount() {
 		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		String id = UUID.randomUUID().toString();
 		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.CREATE_ACCOUNT, id);
 		ref.tell(message, ActorRef.noSender());
+		return message.getResult();
+	}
+	
+	@RequestMapping(value = "create/password/{pass}", method = RequestMethod.PUT)
+	public Account createAccountWithPassword(@PathVariable String pass) {
+		ActorRef ref = Starter.getActorSystem().actorOf(Props.create(ActorManager.class), "manager");
+		String id = UUID.randomUUID().toString();
+		ActorMessage<Account> message = new ActorMessage<>(MessageCodes.CREATE_ACCOUNT, id);
+		ref.tell(message, ActorRef.noSender());
+		ChangePasswordMessage messagePassword = new ChangePasswordMessage(id, pass);
+		ref.tell(messagePassword, ActorRef.noSender());
 		return message.getResult();
 	}
 	

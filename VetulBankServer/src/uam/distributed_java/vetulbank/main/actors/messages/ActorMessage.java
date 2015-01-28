@@ -1,5 +1,7 @@
 package uam.distributed_java.vetulbank.main.actors.messages;
 
+import uam.distributed_java.vetulbank.main.actors.messages.messagescodes.MessageCodes;
+
 public class ActorMessage<T> {
 
 	private T result;
