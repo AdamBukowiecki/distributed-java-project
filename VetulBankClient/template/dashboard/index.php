@@ -1,5 +1,8 @@
 <?php
 
+$json_string = file_get_contents('http://localhost:8080/accounts/'.$_SESSION['accountId']);
+$account = json_decode($json_string);
+
 echo '<h1 class="page-header">Dashboard</h1><div class="row">
     <div class="col-sm-3">
         <div class="panel panel-default">
@@ -7,7 +10,7 @@ echo '<h1 class="page-header">Dashboard</h1><div class="row">
                 <h3 class="panel-title">Account number</h3>
             </div>
             <div class="panel-body">
-                123
+                '.$account->{"id"}.'
             </div>
         </div>
     </div>
@@ -17,7 +20,7 @@ echo '<h1 class="page-header">Dashboard</h1><div class="row">
                 <h3 class="panel-title">Account balance</h3>
             </div>
             <div class="panel-body">
-                123 $
+                '.$account->{"money"}.'
             </div>
         </div>
     </div>
@@ -36,7 +39,7 @@ echo '<h1 class="page-header">Dashboard</h1><div class="row">
         </thead>
         <tbody>';
 
-        $json_string = file_get_contents('http://api.wunderground.com/api/f429b85619ed45e8/geolookup/conditions/forecast/q/Australia/Sydney.json');
+        $json_string = file_get_contents('http://localhost:8080/accounts/'.$_SESSION['accountId'].'/transactions'.$_SESSION['accountId']);
         $transactions = json_decode($json_string);
 
         foreach($transactions as $row) {

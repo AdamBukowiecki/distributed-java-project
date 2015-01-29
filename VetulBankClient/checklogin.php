@@ -6,20 +6,11 @@
         $accountId = $_POST['accountId'];
         $password = $_POST['password'];
 
-
-        $data = array(
-            'accountId' => $accountId,
-            'password' => $password
-        );
-
-        $postString = http_build_query($data, '', '&');
-
-        $url = 'http://localhost:8080/account/'.$accountId.'/password/'.$password;
+        $url = 'http://localhost:8080/accounts/'.$accountId.'/password/'.$password;
 
         $opts2 = array('http' =>
             array(
-                'method'  => 'GET',
-                'header'  => 'Content-type: application/x-www-form-urlencoded'
+                'method'  => 'GET'
             )
         );
 
@@ -33,12 +24,9 @@
 
         $context = stream_context_create($opts2);
 
-        $result = file_get_contents($url, false, $context);
+        $result = file_get_contents($url, FILE_USE_INCLUDE_PATH, $context);
 
-        $array = json_decode($result);
-        print_r($array);
-
-        if(true){
+        if($result == "true"){
             echo 'true';
             $_SESSION['accountId'] = $accountId;
             $_SESSION['password'] = $password;

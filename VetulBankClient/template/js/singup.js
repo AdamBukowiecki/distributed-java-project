@@ -31,23 +31,27 @@ $(document).ready(function() {
         }
         else {
             $.ajax({
-                type: "POST",
-                method: "PUT",
-                url: "http://localhost:8080/accounts/create/password" + password,
-                //data: "password=" + password,
-                success: function (json) {
-                    alert(json);
-                    $json = jQuery.parseJSON(json);
-                    if ($json.accountId != null) {
+                url: 'http://localhost:8080/accounts/create/password/' + password,
+                type: 'PUT',
+
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+
+
+                    $("#message").html("<p class='text-center'><img src='template/images/ajax-loader.gif'></p>")
+                },
+
+                success: function(result){
+                    alert(result);
+                    $json = jQuery.parseJSON(result);
+                    if ($json != null) {
                         $("#signup").hide();
                         $("#message").html('<div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title">Your account number</h3></div><div class="panel-body">'+$json.accountId+'</div></div></div>');
                     }
                     else {
                         $("#message").html($json);
                     }
-                },
-                beforeSend: function () {
-                    $("#message").html("<p class='text-center'><img src='template/images/ajax-loader.gif'></p>")
                 }
             });
         }
